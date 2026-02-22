@@ -1,12 +1,12 @@
-# SvelteKit + Python Desktop App
+# Aplicación de Escritorio SvelteKit + Python
 
-This repository is the parent project for a desktop application built with:
+Este repositorio es el proyecto padre para una aplicación de escritorio construida con:
 
 -   **Frontend:** SvelteKit
 -   **Backend:** Python (FastAPI)
--   **Packaging:** Tauri (using Rust)
+-   **Empaquetado:** Tauri (usando Rust)
 
-## Project Structure
+## Estructura del Proyecto
 
--   `/frontend`: Contains the SvelteKit project for the user interface.
--   `/backend`: Contains the Python API scripts.
+-   `/frontend`: Contiene el proyecto SvelteKit para la interfaz de usuario.
+-   `/backend`: Contiene los scripts de la API de Python.

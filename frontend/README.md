@@ -1,17 +1,17 @@
-# SvelteKit Frontend
+# Frontend de SvelteKit
 
-This directory is intended for the SvelteKit project.
+Este directorio está destinado al proyecto SvelteKit.
 
-## Next Steps
+## Próximos Pasos
 
-1.  Navigate into this directory:
+1.  Navega a este directorio:
     ```bash
     cd frontend
     ```
 
-2.  Run the SvelteKit scaffolding command:
+2.  Ejecuta el comando de scaffolding de SvelteKit:
     ```bash
     npm create svelte@latest .
     ```
 
-3.  Follow the prompts to configure your SvelteKit project. Choose the "SvelteKit App" option.
+3.  Sigue las indicaciones para configurar tu proyecto SvelteKit. Elige la opción "SvelteKit App".
