@@ -1,15 +1,40 @@
 {
   "version": 1,
   "skills": {
+    "api-design": {
+      "source": "yonatangross/orchestkit",
+      "sourceType": "github",
+      "computedHash": "58e430346190edbba72e7554be64ebf84836fd053e98386d44686bc5b0ea69eb"
+    },
+    "architecture-patterns": {
+      "source": "yonatangross/orchestkit",
+      "sourceType": "github",
+      "computedHash": "a0af42adc4168fc8560d909beb4d14e186f19c75d4237ab646c98cb2a8413e52"
+    },
     "fastapi-python": {
       "source": "mindrally/skills",
       "sourceType": "github",
       "computedHash": "1d7346210a6690d2faeb089f074c0dc20a7056c2c83ac1062a11c1b73158be72"
     },
+    "openapi-to-typescript": {
+      "source": "softaworks/agent-toolkit",
+      "sourceType": "github",
+      "computedHash": "525b39ee84d8fbc835d1dea710fb36b40fd4834441a4d18d75a8dafe985eeacd"
+    },
+    "python-backend": {
+      "source": "yonatangross/orchestkit",
+      "sourceType": "github",
+      "computedHash": "5082c6bb9c80edffef64631613de958cc60e95ab653fbff14e54bb1ee4f26232"
+    },
     "security-patterns": {
       "source": "yonatangross/orchestkit",
       "sourceType": "github",
       "computedHash": "841de1ea23e47e4bcbf8823717b2890c6abcadccb2507c3a73cea5acc69cc5dd"
+    },
+    "sveltekit-svelte5-tailwind-skill": {
+      "source": "claude-skills/sveltekit-svelte5-tailwind-skill",
+      "sourceType": "github",
+      "computedHash": "bb72a52a2c415aa8743bf3146dd615f9084e17a8a05e2198f8c3ba23a8053b8b"
     }
   }
 }
