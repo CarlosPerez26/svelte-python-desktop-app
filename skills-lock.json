@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "fastapi-python": {
+      "source": "mindrally/skills",
+      "sourceType": "github",
+      "computedHash": "1d7346210a6690d2faeb089f074c0dc20a7056c2c83ac1062a11c1b73158be72"
+    },
+    "security-patterns": {
+      "source": "yonatangross/orchestkit",
+      "sourceType": "github",
+      "computedHash": "841de1ea23e47e4bcbf8823717b2890c6abcadccb2507c3a73cea5acc69cc5dd"
+    }
+  }
+}
