@@ -1,15 +1,29 @@
 # Aplicación de Escritorio SvelteKit + Python
 
-Este repositorio es el proyecto padre para una aplicación de escritorio construida con:
+Este repositorio es el proyecto padre para una aplicación de escritorio de alta performance y seguridad, diseñada con una arquitectura híbrida moderna.
 
--   **Frontend:** SvelteKit
--   **Backend:** Python (FastAPI)
--   **Empaquetado:** Tauri (usando Rust) - *Integración pendiente, se hará al final.*
+## Visión Arquitectónica
+
+El proyecto se basa en la separación clara de responsabilidades, utilizando **FastAPI como el "cerebro" central** de la operación y **SvelteKit como una interfaz dinámica con SSR**.
+
+### Componentes Core:
+
+-   **Backend (El Cerebro):** Implementado en **Python (FastAPI)**.
+    -   Gestiona la lógica de negocio, procesamiento de datos y orquestación del sistema.
+    -   **Seguridad de Acceso:** Sistema de comunicación basado en API con dos niveles de acceso:
+        1.  **Inicio de Sesión (Rutas Protegidas):** Control de acceso basado en estados previos y **roles de usuario** para operaciones administrativas y sensibles.
+        2.  **Tokens Bearer (Acceso Rápido):** Generación y revocación dinámica de tokens Bearer para consultas rápidas de datos sin necesidad de sesión activa. Estos tokens pueden ser gestionados por usuarios con permisos específicos.
+-   **Frontend (La Interfaz):** Implementado en **SvelteKit (Svelte 5 + TailwindCSS)**.
+    -   Utiliza **SSR (Server-Side Rendering)** para optimizar la carga inicial y la consistencia del estado.
+    -   Interfaz moderna, reactiva y estilizada con TailwindCSS.
+-   **Empaquetado (Escritorio):** Futura integración con **Tauri (Rust)**.
+    -   Tauri se encargará de ejecutar un **Python embebido** para correr los scripts del backend localmente junto con el servidor de SSR del frontend, permitiendo una experiencia de aplicación de escritorio nativa y ligera.
 
 ## Estructura del Proyecto
 
--   `/frontend`: Contiene el proyecto SvelteKit para la interfaz de usuario.
--   `/backend`: Contiene los scripts de la API de Python.
+-   `/frontend`: Proyecto SvelteKit con soporte para SSR y Tailwind.
+-   `/backend`: API de FastAPI, lógica de seguridad y procesamiento Python.
+-   `/.agents/skills/`: Habilidades locales del agente que dictan los estándares de diseño, seguridad y arquitectura.
 
 ## Habilidades del Agente (Agent Skills)
 
