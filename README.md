@@ -11,6 +11,18 @@ Este repositorio es el proyecto padre para una aplicación de escritorio constru
 -   `/frontend`: Contiene el proyecto SvelteKit para la interfaz de usuario.
 -   `/backend`: Contiene los scripts de la API de Python.
 
+## Habilidades del Agente (Agent Skills)
+
+Este proyecto utiliza un conjunto de habilidades locales del agente para potenciar el desarrollo. Estas habilidades se encuentran en el directorio `/.agents/skills/` y están versionadas como parte del proyecto para asegurar un entorno de desarrollo consistente.
+
+-   `api-design`: Proporciona experiencia en el diseño de APIs robustas y escalables.
+-   `architecture-patterns`: Ofrece orientación sobre las mejores prácticas de arquitectura de software.
+-   `fastapi-python`: Experto en desarrollo de backend con Python y FastAPI.
+-   `openapi-to-typescript`: Ayuda a generar tipos de TypeScript a partir de una especificación OpenAPI, facilitando la integración frontend-backend.
+-   `python-backend`: Conocimiento general para el desarrollo de backend en Python.
+-   `security-patterns`: Provee patrones para implementar funcionalidades de seguridad como autenticación y autorización.
+-   `sveltekit-svelte5-tailwind-skill`: Habilidad especializada en el desarrollo de frontend con SvelteKit, Svelte 5 y TailwindCSS.
+
 ---
 
 ## Proceso de Configuración y Aprendizaje de Git/GitHub (Sesión Interactiva)
