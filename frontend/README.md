@@ -1,42 +1,42 @@
-# sv
+# sv - Frontend SvelteKit
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Todo lo que necesitas para construir un proyecto Svelte, impulsado por [`sv`](https://github.com/sveltejs/cli).
 
-## Creating a project
+## Creación de un proyecto
 
-If you're seeing this, you've probably already done this step. Congrats!
+Si estás leyendo esto, probablemente ya hayas completado este paso. ¡Felicidades!
 
 ```sh
-# create a new project
-npx sv create my-app
+# crear un nuevo proyecto
+npx sv create mi-app
 ```
 
-To recreate this project with the same configuration:
+Para recrear este proyecto con la misma configuración:
 
 ```sh
-# recreate this project
+# recrear este proyecto
 bun x sv create --template minimal --types ts --add prettier eslint tailwindcss="plugins:forms" sveltekit-adapter="adapter:node" --install bun .
 ```
 
-## Developing
+## Desarrollo
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Una vez que hayas creado un proyecto y hayas instalado las dependencias con `npm install` (o `pnpm install` o `yarn` o `bun install`), inicia un servidor de desarrollo:
 
 ```sh
 npm run dev
 
-# or start the server and open the app in a new browser tab
+# o inicia el servidor y abre la aplicación en una nueva pestaña del navegador
 npm run dev -- --open
 ```
 
-## Building
+## Construcción
 
-To create a production version of your app:
+Para crear una versión de producción de tu aplicación:
 
 ```sh
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Puedes previsualizar la versión de producción con `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+> Para desplegar tu aplicación, puede que necesites instalar un [adaptador](https://svelte.dev/docs/kit/adapters) para tu entorno de destino.
