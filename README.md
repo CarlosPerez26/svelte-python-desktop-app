@@ -178,6 +178,19 @@ bun remove @tauri-apps/cli
 ```
 *   **Aprendizaje clave:** Se verificó que esta remoción no requirió un commit ya que los cambios de la instalación no habían sido commiteados previamente.
 
+### 12. Primera Prueba de Integración Exitosa (Backend + Frontend)
+
+Se realizó la primera conexión real entre el cerebro (FastAPI) y la interfaz (SvelteKit).
+
+**Acciones Realizadas:**
+*   **Backend:**
+    *   Se configuró `CORSMiddleware` en `backend/main.py` para permitir peticiones desde el origen del frontend (`http://localhost:5173`).
+    *   Se verificó el funcionamiento de los endpoints `/` y `/api/data`.
+*   **Frontend:**
+    *   Se implementó una función `load` universal en `frontend/src/routes/+page.ts` para realizar fetch de datos durante el SSR.
+    *   Se actualizó `+page.svelte` con Svelte 5 y TailwindCSS para mostrar dinámicamente la respuesta del backend.
+*   **Resultado:** Conexión exitosa y visualización de datos en tiempo real.
+
 ---
 
 ## Lo que Aprendimos de Git y GitHub hasta ahora:
