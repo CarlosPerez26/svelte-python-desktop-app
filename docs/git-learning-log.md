@@ -54,6 +54,11 @@ Se instalaron dependencias del frontend y se decidió posponer la integración d
 *   **Frontend:** Implementación de SSR mediante la función `load` en `+page.ts`.
 *   **Resultado:** El frontend consume y muestra datos de FastAPI correctamente.
 
+### 12. Rediseño del Dashboard y Robustez de Datos
+*   **Acción:** Se transformó la interfaz inicial en un Dashboard profesional con Sidebar, Header y Grid de estadísticas.
+*   **Mejora:** Se optimizó la función `load` en SvelteKit para manejar errores de conexión con el backend, mostrando estados de "Servidor no disponible" en lugar de errores críticos.
+*   **UI/UX:** Implementación de un tema oscuro profundo con Tailwind CSS y componentes visuales para métricas y actividad.
+
 ---
 
 ## Conceptos Aprendidos:

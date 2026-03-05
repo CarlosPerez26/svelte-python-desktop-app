@@ -1,0 +1,15 @@
+{
+  "name": "svelte-python-desktop-app",
+  "version": "1.0.0",
+  "description": "Proyecto SvelteKit + FastAPI",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n \"BACK,FRONT\" -c \"green,blue\" \"npm run dev:back\" \"npm run dev:front\"",
+    "dev:back": "cd backend && ./venv/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload",
+    "dev:front": "cd frontend && bun run dev --host 0.0.0.0 --port 5173 -- --watch"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
