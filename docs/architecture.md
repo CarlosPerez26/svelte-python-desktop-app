@@ -1,41 +1,26 @@
-# Arquitectura del Sistema: Nexus OES
+# Arquitectura del Sistema: Nexus OES (V2)
 
-Esta arquitectura se basa en la **Separación de Responsabilidades** (Separation of Concerns) y el principio de **Unidad de Verdad** en el Backend.
+Esta arquitectura se basa en la **Separación Radical de Responsabilidades** y el principio de **Unidad de Verdad Inmutable** en el Backend.
 
-## 1. El Cerebro (Backend - FastAPI)
-El backend es el núcleo de la inteligencia y el guardián de la integridad de los datos.
+## 1. El Cerebro (Backend Abstracto - FastAPI)
+El backend está diseñado como un motor industrial genérico. No "sabe" qué material se está procesando, solo gestiona flujos de masa y valor.
 
-*   **Motor de Máquina de Estados (FSM):** Gestiona la lógica de las plantillas de proceso y valida cada transición de estado de las instancias.
-*   **Gestión de Evidencias:** Capa encargada de recibir hashes y archivos que respaldan la trazabilidad.
-*   **Middleware de Seguridad (Anillos):**
-    *   **Capa de Autenticación:** Verifica identidad vía JWT o API Keys.
-    *   **Capa de Autorización RACI:** Evalúa si el usuario actual tiene el rol (`Responsible` o `Accountable`) para el paso actual del proceso.
-*   **Persistencia Inmutable:** Uso de PostgreSQL con una estrategia de "Solo Inserción" para auditoría operativa, donde los registros históricos no se editan.
+*   **Entidades de Flujo Universal:**
+    *   **Batch (Lote/Carga):** Unidad lógica que agrupa masa y valor. Posee un estado (`RAW`, `WIP`, `FINISHED`) y una ubicación.
+    *   **ContainerSnapshot (Hito de Pesaje):** Registro inmutable de una unidad física (Jumbo, Pallet, Caja). Captura el valor **literal** de tara, peso bruto y precio unitario en el momento exacto del evento.
+    *   **EventLog:** Registro histórico de transformaciones (División, Mezclado, Compactación).
+*   **Inmutabilidad Operativa:** Una vez que un Batch se cierra, sus valores económicos y de pesaje se "congelan". Cualquier cambio en los maestros globales (precios de mercado, taras estándar) **no afecta** a los registros pasados.
+*   **Gestión de Activos:** Seguimiento de envases ocupados en bodega para indicadores de disponibilidad de herramientas de transporte.
 
-## 2. El Reflejo (Frontend - SvelteKit)
-El frontend no toma decisiones de negocio; simplemente muestra lo que el backend autoriza y captura datos de entrada.
+## 2. El Reflejo (Frontend Especializado - SvelteKit)
+El frontend es la capa de **Especialización de Negocio**. Es aquí donde el sistema se adapta a la industria específica (Reciclaje, Minería, Manufactura).
 
-*   **Arquitectura Reactiva:** Svelte 5 para una interfaz fluida que responde a cambios de estado en tiempo real (WebSockets).
-*   **Captura de Datos Operativos:** Formularios dinámicos basados en la "Plantilla de Proceso" actual.
-*   **Visualización de Trazabilidad:** Componentes de línea de tiempo y grafos para mostrar el origen y destino de los materiales.
+*   **Lenguaje de Dominio:** Traduce los términos abstractos del backend a términos operativos ("Jumbos", "Conductores", "Liquidación de Cobre").
+*   **Lógica de Consolidación:** Agrupa el pesaje físico (múltiples Jumbos) con la negociación económica (un precio por tipo de material) para optimizar el flujo del supervisor.
+*   **Gestión de Responsabilidad:** Diferenciación entre Logística Interna (Empresa) y Entrega de Proveedor (Responsabilidad Global del Beneficiario).
 
-## 3. Modelo de Comunicación (Capa de Transporte)
-*   **API RESTful:** Para operaciones estándar (CRUD de catálogos, login, configuración).
-*   **WebSockets (SSE Opcional):** Para notificaciones en tiempo real sobre cambios de estado en líneas de producción o procesos compartidos.
-*   **Event Log:** Registro interno de cada petición para auditoría de trazabilidad técnica.
+## 3. Modelo de Datos Inmutable
+Para garantizar la auditoría, el sistema utiliza **Snapshots**. En lugar de referenciar una tabla de "Precios de Hoy", el registro de cada compra guarda el precio pactado como un valor estático. Esto permite reconstruir la historia financiera exacta de cualquier fecha pasada.
 
-## 4. Flujo de un "Evento Operativo Física"
-1.  **Captura:** El operario escanea un código (Fisico -> Digital).
-2.  **Validación:** El frontend envía la intención al backend.
-3.  **Evaluación de Seguridad:** El backend verifica:
-    *   ¿Token válido?
-    *   ¿Usuario activo?
-    *   ¿El proceso permite este paso?
-    *   ¿El usuario es el `Responsible` asignado?
-4.  **Ejecución y Persistencia:** Si todo es correcto, el backend registra el evento como un nuevo "Hito inmutable" y actualiza el estado del objeto.
-5.  **Reflejo:** El frontend actualiza la UI confirmando el registro exitoso.
-
-## 5. Estrategia de Versionamiento de Procesos
-*   Cada `ProcessTemplate` tiene un `version_id`.
-*   Cuando un proceso inicia, se vincula a una versión específica de la plantilla.
-*   Si la plantilla cambia, las instancias antiguas siguen ejecutándose bajo la versión original para garantizar la coherencia de los datos históricos.
+## 4. Independencia de Infraestructura
+Los modelos de dominio son clases puras de Python. Esto permite que el sistema pueda migrar de una base de datos a otra (SQL, NoSQL, In-memory) sin alterar la lógica de cálculo de eficiencia o liquidación.

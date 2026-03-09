@@ -1,7 +1,7 @@
 # Plan de Proyecto: Nexus OES (Operational Execution System)
 
 ## 1. Visión y Filosofía
-Sistema de gestión orientado a **procesos operativos e industriales** con trazabilidad total de materiales y eventos físicos.
+Nexus OES es un sistema de gestión orientado a **procesos operativos e industriales** con trazabilidad total de materiales y eventos físicos.
 *   **Filosofía:** "Backend como Cerebro, Frontend como Reflejo". El backend es el único guardián de la lógica, validaciones y estados. El frontend es un capturador de evidencias y disparador de acciones.
 *   **Objeto de Negocio:** Todo evento físico (recepción, transformación, despacho) se trata como un objeto digital inmutable y auditable.
 
@@ -18,84 +18,54 @@ Sistema de gestión orientado a **procesos operativos e industriales** con traza
 ### Anillo 3: Autorización Híbrida (RBAC + Contextual)
 *   **RBAC Tradicional:** Usuario -> Roles (Gerente, Operador, Auditor) -> Permisos.
 *   **Control Contextual:** La autorización depende del **Estado del Proceso**. (Ej: Un operador solo puede "Firmar" si el proceso está en estado `PENDIENTE_FIRMA`).
-*   **Modelo RACI:** Asignación de responsabilidades por paso de proceso:
-    *   **R**esponsible (Ejecuta).
-    *   **A**ccountable (Aprueba - Solo uno).
-    *   **C**onsulted (Información previa).
-    *   **I**nformed (Notificación post-evento).
+*   **Modelo RACI:** Asignación de responsabilidades por paso de proceso: **R**esponsible (Ejecuta), **A**ccountable (Aprueba), **C**onsulted, **I**nformed.
 
 ### Anillo 4: Acceso Programático (API Keys)
-*   **Tokens Bearer:** Generación de llaves personales para integraciones externas (IoT, Balanzas, Scanners).
-*   **Herencia de Permisos:** Los tokens tienen el mismo nivel de acceso que el usuario creador.
-*   **Auditoría:** Cada acción vía API Key queda vinculada al usuario responsable.
+*   **Tokens Bearer:** Generación de llaves para integraciones externas (IoT, Balanzas, Scanners). Cada acción vía API Key queda vinculada al usuario responsable.
 
 ## 3. Arquitectura de Procesos y Trazabilidad
 
 ### A. Modelado de Procesos (Plantillas)
-*   Los procesos se definen como **Plantillas Versionadas**.
-*   Una modificación en la plantilla no afecta a las instancias que ya están en curso (Preservación del historial).
+*   Los procesos se definen como **Plantillas Versionadas**. Una modificación en la plantilla no afecta a las instancias que ya están en curso (Preservación del historial).
 
-### B. Ejecución (Instancias Operativas)
-*   Cada ejecución de una plantilla genera un **Documento Objeto** único.
-*   **Inmutabilidad:** Una vez que un paso se marca como completado, los datos asociados no pueden modificarse.
-*   **Evidencia Digital:** Capacidad de adjuntar respaldos (fotos, hashes de archivos, firmas digitales) a cada evento físico.
+### B. Ejecución e Inmutabilidad
+*   **Documento Objeto:** Cada ejecución genera un registro único. Una vez completado, los datos son inmodificables.
+*   **Snapshots Inmutables:** Los valores de pesaje, taras y precios se guardan como "fotos" literales del momento del evento, protegiendo el histórico contra cambios futuros en maestros globales.
 
-### C. Trazabilidad de Materiales
-*   Seguimiento desde Proveedor -> Materia Prima -> Proceso de Transformación -> Producto Terminado -> Cliente.
-*   Gestión de Lotes y Números de Serie.
+### C. Gestión de Desviaciones
+*   Bloqueo de acciones fuera de secuencia. Requiere un flujo de autorización especial por un perfil con permiso de "Desviación" (Accountable).
 
-### D. Gestión de Desviaciones
-*   Si un usuario intenta ejecutar una acción fuera de la secuencia definida en la Plantilla, el sistema bloquea la acción.
-*   Se activa un **Flujo de Autorización Especial** donde un perfil con permiso de "Desviación" (Accountable) debe validar el salto de paso.
+## 4. Ecosistema de Operación Local (Offline-First)
 
-## 4. Ecosistema de Operación Local e Inclusivo (Offline-First)
+### A. Despliegue Intranet (PWA Local)
+*   Instalación desde la IP del servidor local. Consumo cero de datos externos. Interfaz industrial de alta visibilidad.
 
-Para garantizar la continuidad operativa en entornos industriales sin dependencia de internet, el sistema se despliega bajo un modelo de **Intranet Privada**.
+### B. Identificación Ágil (QR + PIN)
+*   Escaneo de lote + PIN de 4 dígitos para una atribución rápida ("Quién hizo Qué").
 
-### A. Acceso y Despliegue (PWA Local)
-*   **Instalación sin Datos:** El servidor funciona como un nodo central en la red local (WiFi/Intranet). El trabajador accede vía IP (ej. `http://192.168.1.50`) e instala la aplicación como una **PWA (Progressive Web App)** en su pantalla de inicio.
-*   **Consumo Cero:** Una vez instalada, la app funciona como una aplicación nativa consumiendo recursos locales, sin requerir salida a internet ni consumo de datos móviles del trabajador.
-*   **Interfaz Industrial:** Diseñada para alta visibilidad y uso con guantes o en condiciones de baja iluminación.
+### C. Notificaciones Híbridas
+*   El servidor utiliza su propia salida a internet para enviar alertas críticas (Telegram/WhatsApp/Email) al detectar hitos como "Lote Terminado".
 
-### B. Flujo de Identificación y Registro (QR + PIN)
-*   **Acción Rápida:** El trabajador escanea un **Código de Barras o QR** del producto o lote.
-*   **Identificación por PIN:** Tras el escaneo, el sistema solicita un **PIN de 4 dígitos**. Esto vincula la acción al trabajador responsable de forma ágil sin necesidad de teclados complejos o logins prolongados.
-*   **Atribución de Tareas:** El sistema registra automáticamente "Quién hizo Qué" en cada paso del proceso definido en la plantilla.
+## 5. Fase 1: Panel de Control de Supervisor (V1 - Tracer Bullet)
+Implementación inicial para demostrar valor inmediato:
+*   **Recepción e Identidad Fiscal:** Registro de entradas vinculando la responsabilidad legal al Beneficiario Global.
+*   **Consolidación de Liquidación:** Pesaje por unidades físicas (Jumbos, Pallets) con precios negociados por material.
+*   **Control de Activos:** Monitoreo de envases ocupados en bodega para asegurar disponibilidad operativa.
 
-### C. Inteligencia Operativa y Notificaciones
-*   **Cálculo Automático de Productividad:** El backend calcula el tiempo de producción (Lead Time) comparando las marcas de tiempo (`timestamps`) entre los escaneos de inicio y fin de proceso.
-*   **Notificaciones Híbridas:** 
-    *   **El Trabajador:** Opera 100% localmente.
-    *   **El Servidor:** Detecta eventos críticos (ej: "Lote Terminado"). Mediante un script de Python, el servidor utiliza su propia salida a internet para enviar mensajes automáticos (Telegram/WhatsApp/Email) al supervisor solicitando validación de calidad o fin de proceso.
+## 6. Inteligencia y Rentabilidad (BI)
+*   **Costos Reales (MOD):** Vinculación de tiempos (QR+PIN) con tablas de costos/hora.
+*   **Módulo de Ventas:** Registro de demanda externa y priorización de lotes.
+*   **Motor Predictivo (Forecast):** Uso de series de tiempo (Python) para proyectar fin de lote y picos de demanda.
 
-## 5. Capa de Inteligencia y Rentabilidad (Business Intelligence)
-
-Para elevar el sistema de un nivel táctico a uno estratégico, se implementa una capa de análisis de datos orientada a la toma de decisiones financieras y comerciales.
-
-### A. Módulo Financiero y de Costos Reales
-*   **Costo de Mano de Obra Directa (MOD):** Vinculación automática de los tiempos registrados por el trabajador (via QR+PIN) con tablas de costos/hora, permitiendo conocer el costo real de labor por cada producto o lote en tiempo real.
-*   **Margen de Contribución:** Cruce de datos entre el costo de materiales (trazabilidad) y mano de obra para determinar la rentabilidad real de cada orden de producción.
-
-### B. Gestión de Ventas y Demanda
-*   **Integración de Pedidos:** Módulo para registrar la demanda externa (ventas). El sistema contrasta los pedidos pendientes contra la capacidad instalada medida en planta.
-*   **Priorización Inteligente:** Algoritmos que sugieren qué lotes producir primero basándose en fechas de entrega, rentabilidad y disponibilidad de materiales.
-
-### C. Motor de Forecast y Proyecciones (Predictivo)
-*   **Estimación de Fin de Lote:** Basado en el rendimiento histórico de los trabajadores y el ritmo actual, el sistema proyecta la hora/fecha exacta de finalización de un proceso.
-*   **Pronóstico de Demanda:** Uso de series de tiempo (Python Data Science) para predecir picos de demanda estacionales y sugerir niveles de inventario óptimos.
-
-## 6. Stack Tecnológico
+## 7. Stack Tecnológico
 *   **Backend:** Python 3.12+, FastAPI, SQLAlchemy 2.0 (Async), Pydantic v2.
-*   **Ciencia de Datos:** Pandas, NumPy y Scikit-learn (Para el motor de Forecast y análisis financiero).
-*   **Base de Datos:** PostgreSQL (Integridad referencial estricta).
-*   **Frontend:** SvelteKit (Svelte 5) + Vite PWA Plugin + Chart.js/LayerChart (Para visualización de KPIs y tendencias).
-*   **Notificaciones:** Clientes asíncronos en Python (Httpx) para integración con APIs de mensajería externa.
-*   **Comunicación:** REST API + WebSockets para actualizaciones de estado en tiempo real.
+*   **Ciencia de Datos:** Pandas, NumPy y Scikit-learn.
+*   **Frontend:** SvelteKit (Svelte 5) + Vite PWA Plugin + Chart.js.
+*   **Comunicación:** REST API + WebSockets para tiempo real.
 
-## 7. Fases de Desarrollo (Roadmap)
-1.  **Cimientos (Seguridad):** Auth, Anillos 1 y 2, Usuario ROOT.
-2.  **Motor de Procesos (Core):** Definición de Plantillas y Máquina de Estados (QR + PIN).
-3.  **Trazabilidad y Costos:** Gestión de materiales y cálculo de MOD inicial.
-4.  **Módulo de Ventas y Demanda:** Registro de pedidos y flujo de priorización.
-5.  **Capa de Inteligencia (BI):** Forecast predictivo, dashboards financieros y KPIs de rentabilidad (ROI/OEE).
-6.  **Optimización PWA:** Despliegue final en Intranet con soporte offline total.
+## 8. Roadmap
+1.  **Módulo de Recepción e Inmutabilidad (Completado):** Consolidación de ingresos y activos.
+2.  **Módulo de Transformación (Compactación):** Producción de Pacas (PT) y liberación de envases.
+3.  **Core Operativo (QR+PIN):** Despliegue de la máquina de estados en planta.
+4.  **Inteligencia Financiera:** Cálculo de MOD y márgenes.
+5.  **Optimización PWA:** Despliegue final en Intranet local.
