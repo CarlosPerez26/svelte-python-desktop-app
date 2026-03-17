@@ -32,4 +32,4 @@ Para entender mejor el proyecto, consulta los siguientes documentos:
 
 ---
 
-*Proyecto en desarrollo activo.*
+*Proyecto en desarrollo activo y entorno de desarrollo verificado.*
